@@ -305,7 +305,7 @@ function Cempasuchil({ size = 40, style = {}, petalColor = 'var(--c-ocre)', core
 
 function Vela({ size = 48, lit = true, style = {}, flicker = true }) {
   return (
-    <svg width={size} height={size * 1.8} viewBox="0 0 30 54" style={{ display: 'inline-block', ...style }}>
+    <svg width={size} height={size * 2.2} viewBox="0 0 30 54" style={{ display: 'inline-block', ...style }}>
       {lit && (
         <g className={flicker ? 'vela-flame' : ''}>
           <ellipse cx="15" cy="5" rx="3.5" ry="7" fill="var(--c-ocre)" opacity="0.7"/>

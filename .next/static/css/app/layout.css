@@ -350,7 +350,7 @@ body { font-size: 16px; line-height: 1.55; }
 .contact { padding: clamp(60px, 8vw, 100px) 0 clamp(40px, 6vw, 60px); }
 .contact-card {
   background: var(--c-negro); color: var(--c-hueso);
-  padding: clamp(36px, 6vw, 72px) clamp(24px, 5vw, 60px);
+  padding: clamp(30px, 6vw, 72px) clamp(24px, 5vw, 60px);
   position: relative; overflow: hidden; margin-top: 20px;
 }
 .contact-card::before {
@@ -361,10 +361,10 @@ body { font-size: 16px; line-height: 1.55; }
 .contact-altar { display: flex; align-items: flex-end; justify-content: center; gap: 28px; margin-bottom: 32px; position: relative; z-index: 2; }
 .contact-actions { position: relative; z-index: 2; text-align: center; }
 .contact-email {
-  display: inline-flex; align-items: center; gap: 16px;
+  display: inline-flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;
   background: transparent; border: 1px solid color-mix(in oklab, var(--c-hueso) 30%, transparent);
-  padding: 18px 28px; cursor: pointer; color: var(--c-hueso);
-  font-family: var(--font-display); font-style: italic; font-size: clamp(20px, 2.6vw, 30px);
+  padding: 18px 28px; cursor: pointer; color: var(--c-hueso); max-width: 100%; box-sizing: border-box;
+  font-family: var(--font-display); font-style: italic; font-size: clamp(16px, 4vw, 30px);
   transition: background .18s, border-color .18s, transform .18s;
 }
 .contact-email:hover { background: var(--c-terracota); border-color: var(--c-terracota); transform: translateY(-2px); }
@@ -375,6 +375,11 @@ body { font-size: 16px; line-height: 1.55; }
 .social-chip:hover { background: color-mix(in oklab, var(--c-hueso) 10%, transparent); border-color: var(--c-ocre); }
 .social-ic { font-size: 11px; color: var(--c-ocre); letter-spacing: 1px; }
 .social-arrow { opacity: .5; font-size: 11px; }
+
+@media (max-width: 520px) {
+  .contact-email { padding: 14px 18px; gap: 10px; width: 100%; }
+  .contact-altar { gap: 16px; }
+}
 
 /* ═══ Footer ═══ */
 .footer { background: var(--c-negro); color: color-mix(in oklab, var(--c-hueso) 60%, transparent); padding: 18px var(--pad-x); font-size: 11px; letter-spacing: 1px; }

@@ -1,0 +1,170 @@
+/* Case study page — reuses tokens from tokens.css */
+
+.cs-root {
+  min-height: 100vh;
+  background: var(--c-hueso);
+  color: var(--c-tinta);
+}
+
+/* Nav */
+.cs-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px var(--pad-x);
+  background: var(--c-hueso);
+  border-bottom: 1px solid rgba(58,46,36,.1);
+}
+
+.cs-back {
+  color: var(--c-terracota);
+  text-decoration: none;
+  font-size: .85rem;
+  letter-spacing: .04em;
+  transition: opacity .15s;
+}
+.cs-back:hover { opacity: .7; }
+
+.cs-nav-tag {
+  font-size: .78rem;
+  color: var(--c-tinta);
+  opacity: .55;
+  letter-spacing: .04em;
+}
+
+/* Hero */
+.cs-hero {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 72px var(--pad-x) 56px;
+  border-bottom: 1px solid rgba(58,46,36,.08);
+}
+
+.cs-icon {
+  font-size: 3.5rem;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.cs-num {
+  font-size: .8rem;
+  letter-spacing: .08em;
+  color: var(--c-terracota);
+  margin-bottom: 10px;
+}
+
+.cs-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--c-negro);
+  margin: 0 0 10px;
+}
+
+.cs-subtitle {
+  font-size: .85rem;
+  letter-spacing: .04em;
+  color: var(--c-tinta);
+  opacity: .6;
+  margin-bottom: 24px;
+}
+
+.cs-chips {
+  margin-bottom: 32px;
+}
+
+.cs-kpi {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  background: var(--c-terracota);
+  color: var(--c-hueso);
+  padding: 14px 20px;
+  border-radius: var(--radius);
+}
+.cs-kpi .kpi-val {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.cs-kpi .kpi-label {
+  font-size: .72rem;
+  letter-spacing: .06em;
+  opacity: .85;
+}
+
+/* Body */
+.cs-body {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 64px var(--pad-x) 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.cs-section {
+  border-top: 1px solid rgba(58,46,36,.12);
+  padding-top: 40px;
+}
+
+.cs-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 600;
+  color: var(--c-negro);
+  margin: 0 0 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.cs-section-num {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--c-terracota);
+  letter-spacing: .06em;
+}
+
+.cs-p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--c-tinta);
+  max-width: 68ch;
+  margin: 0;
+}
+
+.cs-placeholder {
+  opacity: .45;
+  font-style: italic;
+}
+
+/* Footer */
+.cs-footer {
+  border-top: 1px solid rgba(58,46,36,.1);
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 32px var(--pad-x) 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cs-footer-copy {
+  font-size: .78rem;
+  letter-spacing: .04em;
+  opacity: .4;
+}
+
+/* Loteria card "ver caso" button */
+.loteria-case-btn {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: .78rem;
+}

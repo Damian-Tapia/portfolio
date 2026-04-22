@@ -1,0 +1,59 @@
+/* Tierra mexicana palette + type system */
+:root {
+  --c-terracota: #c96442;
+  --c-terracota-deep: #a14a2e;
+  --c-ocre: #c99a3a;
+  --c-ocre-soft: #e0b757;
+  --c-hueso: #f4ece0;
+  --c-hueso-warm: #ebe0d0;
+  --c-negro: #1f1a15;
+  --c-negro-soft: #2a241e;
+  --c-oxido: #8a3a2a;
+  --c-rosa: #c25a6b;
+  --c-tinta: #3a2e24;
+
+  --font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --radius: 2px;
+  --shadow-sm: 0 1px 2px rgba(31,26,21,0.06), 0 2px 6px rgba(31,26,21,0.04);
+  --shadow-md: 0 4px 12px rgba(31,26,21,0.08), 0 10px 30px rgba(31,26,21,0.06);
+  --shadow-lg: 0 20px 60px rgba(31,26,21,0.18);
+
+  --max-w: 1200px;
+  --pad-x: clamp(20px, 5vw, 56px);
+}
+
+/* Paletas alternas (tweakable) */
+[data-palette="noche"] {
+  --c-hueso: #18120d;
+  --c-hueso-warm: #221a12;
+  --c-negro: #f4ece0;
+  --c-negro-soft: #e5d9c3;
+  --c-tinta: #e0d3ba;
+  --c-terracota: #e07a52;
+  --c-oxido: #c25a3a;
+}
+[data-palette="festivo"] {
+  --c-terracota: #ff6a3d;
+  --c-ocre: #ffb627;
+  --c-rosa: #e63b79;
+  --c-oxido: #a03ed8;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  color: var(--c-tinta);
+  background: var(--c-hueso);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: var(--c-terracota); color: var(--c-hueso); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--c-hueso-warm); }
+::-webkit-scrollbar-thumb { background: var(--c-oxido); border-radius: 5px; }

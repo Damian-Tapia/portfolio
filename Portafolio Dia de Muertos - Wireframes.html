@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Portafolio Día de Muertos · Wireframes</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #f0eee9; overflow: hidden; height: 100%; }
+  * { box-sizing: border-box; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="wireframes/papel-picado.jsx"></script>
+<script type="text/babel" src="wireframes/directions.jsx"></script>
+
+<script type="text/babel">
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "paleta": "tierra",
+  "tipografia": "caveat",
+  "idioma": "es"
+}/*EDITMODE-END*/;
+
+function Legend() {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 16, left: 16, zIndex: 50,
+      background: '#fff', border: '1px solid #1f1a1533', padding: '10px 14px',
+      fontFamily: 'Kalam, system-ui, sans-serif', fontSize: 12, color: '#1f1a15',
+      boxShadow: '0 2px 10px rgba(0,0,0,.08)', borderRadius: 2, maxWidth: 280
+    }}>
+      <div style={{ fontFamily: 'Caveat, cursive', fontSize: 18, fontWeight: 700, marginBottom: 4 }}>
+        Portafolio · Día de Muertos
+      </div>
+      <div style={{ fontSize: 11, color: '#8a3a2a', marginBottom: 6 }}>
+        4 direcciones · wireframes de baja fidelidad
+      </div>
+      <div style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
+        {[
+          ['#c96442','terracota'],
+          ['#c99a3a','ocre'],
+          ['#f4ece0','hueso'],
+          ['#1f1a15','negro'],
+          ['#8a3a2a','óxido'],
+          ['#c25a6b','rosa'],
+        ].map(([c,n]) => (
+          <div key={n} title={n} style={{ width: 16, height: 16, background: c, border: '1px solid #1f1a1533' }}/>
+        ))}
+      </div>
+      <div style={{ fontSize: 10, opacity: 0.7, lineHeight: 1.4 }}>
+        metáfora: cada sección cuelga de su propio papel picado ·
+        loader: vela → papeles → hero ·
+        proyectos: cartas de lotería ·
+        stack: veladoras.
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <>
+      <DesignCanvas>
+        <DCSection id="flows" title="Portafolio Día de Muertos" subtitle="4 direcciones — cada sección cuelga de su propio papel picado · tierra mexicana · editorial moderno">
+          <DCArtboard id="a" label="A · Clásico centrado" width={360} height={1400}>
+            <DirectionA/>
+          </DCArtboard>
+          <DCArtboard id="b" label="B · Asimétrico editorial" width={360} height={1560}>
+            <DirectionB/>
+          </DCArtboard>
+          <DCArtboard id="c" label="C · Revista tipográfica" width={360} height={1400}>
+            <DirectionC/>
+          </DCArtboard>
+          <DCArtboard id="d" label="D · App híbrida" width={360} height={1600}>
+            <DirectionD/>
+          </DCArtboard>
+
+          <DCPostIt top={-20} left={20} rotate={-3} width={200}>
+            Elige una dirección, o mezcla partes de varias (ej. hero de B + proyectos de D)
+          </DCPostIt>
+          <DCPostIt top={200} left={-180} rotate={2} width={160}>
+            Todas las direcciones usan el mismo "sistema" de papeles picados como separador narrativo entre secciones.
+          </DCPostIt>
+          <DCPostIt top={540} left={-180} rotate={-2} width={160}>
+            Lotería, veladoras y cempasúchil son acentos — el resto es editorial (mucho espacio, tipografía grande, b&n).
+          </DCPostIt>
+        </DCSection>
+      </DesignCanvas>
+      <Legend/>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

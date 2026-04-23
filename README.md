@@ -3,54 +3,42 @@
 Portafolio personal de desarrollador web con temática de Día de Muertos.
 Paleta tierra mexicana · papeles picados · veladoras · cartas de lotería.
 
-**Live:** https://damian-tapia.github.io/portfolio/
-
 ## Stack
-HTML estático + React 18 (via CDN) + Babel standalone. Sin build step.
+
+Next.js 14 (App Router) · React 18 · CSS custom properties. Sin dependencias de UI externas.
 
 ## Estructura
+
 ```
-├── index.html                # entry point (= Portafolio.html)
-├── Portafolio.html
+├── app/
+│   ├── layout.jsx              # root layout, importa estilos globales
+│   ├── page.jsx                # página principal
+│   └── proyectos/[slug]/       # rutas de casos de estudio
 ├── hifi/
-│   ├── tokens.css            # paleta + tipografía
-│   ├── styles.css            # estilos globales
-│   ├── copy.jsx              # textos ES/EN
-│   ├── ornaments.jsx         # papeles picados, veladoras, cempasúchiles
-│   ├── loader.jsx            # animación de entrada
-│   ├── sections.jsx          # hero, about, projects, stack, contact
-│   └── tweaks.jsx            # panel de tweaks (idioma, paleta, pétalos)
-└── wireframes/               # wireframes low-fi iniciales
+│   ├── tokens.css              # paleta + tipografía
+│   ├── styles.css              # estilos globales
+│   ├── copy.jsx                # textos ES/EN
+│   ├── papel-picado.jsx        # papeles picados, veladoras, cempasúchiles
+│   └── sections.jsx            # todos los componentes (Loader, Nav, Hero, About, Projects, Stack, Contact, Footer)
+├── next.config.js
+└── package.json
 ```
 
 ## Correr localmente
-Carga `.jsx` vía Babel standalone, necesita servidor local:
 
 ```bash
-python3 -m http.server 8000
-# o
-npx serve .
+npm install
+npm run dev
 ```
 
-→ `http://localhost:8000/`
+→ `http://localhost:3000`
 
-## Subir a GitHub (este repo)
+## Build de producción
 
 ```bash
-git init
-git add .
-git commit -m "v0.1 portafolio día de muertos"
-git branch -M main
-git remote add origin git@github.com:Damian-Tapia/portfolio.git
-git push -u origin main
+npm run build
+npm run start
 ```
-
-## Activar GitHub Pages
-
-1. **Settings → Pages**
-2. **Source:** Deploy from a branch
-3. **Branch:** `main` · **Folder:** `/ (root)` · Save
-4. Espera ~1 min → `https://damian-tapia.github.io/portfolio/`
 
 ## Licencia
 © 2026 Manlio Damián Tapia

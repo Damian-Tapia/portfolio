@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { COPY } from './copy.jsx';
+import { TEXT } from './projects/projects.jsx';
 import { PP, Papel, Garland, Cempasuchil, Vela } from './papel-picado.jsx';
 
 // ─── LOADER ──────────────────────────────────────────────
@@ -177,9 +178,73 @@ function About({ lang }) {
 }
 
 // ─── PROJECTS (Lotería) ──────────────────────────────────
+function getProjectDetail(lang, slug) {
+  const p = TEXT[lang].projects;
+  return [p.proline, p.xcamp, p.freelance.clinica, p.freelance.coLabora]
+    .find(proj => proj.slug === slug);
+}
+
+function ProjectModal({ detail, cardName, lang, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => e.key === 'Escape' && onClose();
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
+  const es = lang === 'es';
+  const desc      = es ? detail.descripcion                    : detail.description;
+  const rol       = es ? detail.rolYContexto.rol               : detail.roleAndContext.role;
+  const periodo   = es ? detail.rolYContexto.periodo           : detail.roleAndContext.period;
+  const resumen   = es ? detail.rolYContexto.resumen           : detail.roleAndContext.summary;
+  const desafios  = es ? detail.desafios                       : detail.challenges;
+  const decisiones = es ? detail.decisionesClaveYResultados    : detail.keyDecisionsAndResults;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-panel" onClick={e => e.stopPropagation()}>
+        <button className="modal-close mono" onClick={onClose}>✕</button>
+        <div className="modal-header">
+          <span className="modal-role mono">{rol}</span>
+          <h2 className="modal-name">{cardName}</h2>
+          <span className="modal-period mono">{periodo}</span>
+        </div>
+        <p className="modal-context">{desc}</p>
+        <p className="modal-summary">{resumen}</p>
+
+        <div className="modal-section-title mono">{es ? '— desafíos' : '— challenges'}</div>
+        <ul className="modal-highlights">
+          {desafios.map((d, i) => (
+            <li key={i}>
+              <strong>{es ? d.titulo : d.title}</strong>
+              <span>{es ? d.descripcion : d.description}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="modal-section-title mono">{es ? '— decisiones clave' : '— key decisions'}</div>
+        <ul className="modal-decisions">
+          {decisiones.map((d, i) => (
+            <li key={i}>
+              <strong>{d.decision}</strong>
+              <span className="decision-detail">{es ? d.detalle : d.detail}</span>
+              <span className="decision-result">{es ? d.resultado : d.result}</span>
+            </li>
+          ))}
+        </ul>
+
+      </div>
+    </div>
+  );
+}
+
 function Projects({ lang }) {
   const p = COPY[lang].projects;
   const [flipped, setFlipped] = useState({});
+  const [activeProject, setActiveProject] = useState(null);
   const featured = p.cards.find(c => c.featured);
   const rest = p.cards.filter(c => !c.featured);
   const toggleFlip = (num) => setFlipped(f => ({ ...f, [num]: !f[num] }));
@@ -198,12 +263,28 @@ function Projects({ lang }) {
         <SectionHeader num="03" label={p.label} title={p.title} subtitle={p.subtitle}/>
 
         {/* Featured loteria card — big */}
-        <FeaturedCard card={featured} lang={lang} featuredLabel={p.featured} flipped={!!flipped[featured.num]} onFlip={() => toggleFlip(featured.num)}/>
+        <FeaturedCard
+          card={featured}
+          lang={lang}
+          featuredLabel={p.featured}
+          detail={getProjectDetail(lang, featured.slug)}
+          flipped={!!flipped[featured.num]}
+          onFlip={() => toggleFlip(featured.num)}
+          onShowMore={(slug) => setActiveProject(slug)}
+        />
 
         {/* Grid of rest */}
         <div className="loteria-grid">
           {rest.map(card => (
-            <LoteriaCard key={card.num} card={card} lang={lang} flipped={!!flipped[card.num]} onFlip={() => toggleFlip(card.num)}/>
+            <LoteriaCard
+              key={card.num}
+              card={card}
+              lang={lang}
+              detail={getProjectDetail(lang, card.slug)}
+              flipped={!!flipped[card.num]}
+              onFlip={() => toggleFlip(card.num)}
+              onShowMore={(slug) => setActiveProject(slug)}
+            />
           ))}
         </div>
 
@@ -211,11 +292,20 @@ function Projects({ lang }) {
           <a href="#" className="link-arrow mono">{p.viewAll}</a>
         </div>
       </div>
+
+      {activeProject && (
+        <ProjectModal
+          detail={getProjectDetail(lang, activeProject)}
+          cardName={p.cards.find(c => c.slug === activeProject)?.name}
+          lang={lang}
+          onClose={() => setActiveProject(null)}
+        />
+      )}
     </section>
   );
 }
 
-function FeaturedCard({ card, lang, featuredLabel, flipped, onFlip }) {
+function FeaturedCard({ card, lang, featuredLabel, detail, flipped, onFlip, onShowMore }) {
   return (
     <div className={`featured-card ${flipped ? 'flipped' : ''}`} onClick={onFlip}>
       <div className="featured-inner">
@@ -248,8 +338,13 @@ function FeaturedCard({ card, lang, featuredLabel, flipped, onFlip }) {
           <div className="back-center">
             <div className="back-label mono">{lang === 'es' ? 'CASO DE ESTUDIO' : 'CASE STUDY'}</div>
             <h4>{card.name}</h4>
-            <p>{lang === 'es' ? 'Abre el caso completo para leer la historia del proyecto, decisiones técnicas, capturas y métricas.' : 'Open the full case to read the project story, technical decisions, screenshots and metrics.'}</p>
-            <Link href={`/proyectos/${card.slug}`} onClick={e => e.stopPropagation()} className="btn btn-primary">{lang === 'es' ? 'ver caso →' : 'open case →'}</Link>
+            <p>{lang === 'es' ? detail?.descripcion : detail?.description}</p>
+            <button
+              className="btn btn-primary"
+              onClick={e => { e.stopPropagation(); onShowMore(card.slug); }}
+            >
+              {lang === 'es' ? 'mostrar más →' : 'show more →'}
+            </button>
           </div>
         </div>
       </div>
@@ -257,7 +352,7 @@ function FeaturedCard({ card, lang, featuredLabel, flipped, onFlip }) {
   );
 }
 
-function LoteriaCard({ card, lang, flipped, onFlip }) {
+function LoteriaCard({ card, lang, detail, flipped, onFlip, onShowMore }) {
   return (
     <div className={`loteria-card ${flipped ? 'flipped' : ''}`} onClick={onFlip}>
       <div className="loteria-inner">
@@ -278,17 +373,21 @@ function LoteriaCard({ card, lang, flipped, onFlip }) {
           <div className="loteria-back-inner">
             <div className="loteria-back-num mono">N° {card.num}</div>
             <div className="loteria-back-name">{card.name}</div>
-            <p className="loteria-back-blurb">{card.blurb}</p>
+            <p className="loteria-back-blurb">
+              {(() => {
+                const d = lang === 'es' ? detail?.descripcion : detail?.description;
+                return d && d.length > 130 ? d.slice(0, 130) + '…' : d;
+              })()}
+            </p>
             <div className="stack-chips">
               {card.stack.map(s => <span key={s} className="chip mono chip-sm">{s}</span>)}
             </div>
-            <Link
-              href={`/proyectos/${card.slug}`}
-              onClick={e => e.stopPropagation()}
+            <button
               className="btn btn-primary loteria-case-btn"
+              onClick={e => { e.stopPropagation(); onShowMore(card.slug); }}
             >
-              {lang === 'es' ? 'ver caso →' : 'open case →'}
-            </Link>
+              {lang === 'es' ? 'mostrar más →' : 'show more →'}
+            </button>
           </div>
         </div>
       </div>

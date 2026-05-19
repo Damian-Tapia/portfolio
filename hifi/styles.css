@@ -336,6 +336,54 @@ body { font-size: 16px; line-height: 1.55; }
 
 .mono { font-family: var(--font-mono); }
 
+/* ═══ Project Modal ═══ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: color-mix(in oklab, var(--c-negro) 88%, transparent);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  animation: modal-fade .2s ease;
+}
+.modal-panel {
+  background: var(--c-tinta, #1f1a15);
+  border: 1px solid color-mix(in oklab, var(--c-hueso) 16%, transparent);
+  border-radius: 4px;
+  max-width: 680px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  padding: 40px;
+  position: relative;
+  animation: modal-up .28s cubic-bezier(.2,.8,.2,1);
+}
+.modal-close {
+  position: absolute; top: 16px; right: 20px;
+  background: none; border: none; cursor: pointer;
+  color: color-mix(in oklab, var(--c-hueso) 50%, transparent);
+  font-size: 18px; line-height: 1; padding: 4px 8px;
+  transition: color .15s;
+}
+.modal-close:hover { color: var(--c-hueso); }
+.modal-header { margin-bottom: 20px; }
+.modal-role { font-size: 11px; letter-spacing: 2.5px; color: var(--c-ocre); text-transform: uppercase; display: block; margin-bottom: 8px; }
+.modal-name { font-family: var(--font-display); font-style: italic; font-size: clamp(28px, 5vw, 40px); color: var(--c-hueso); margin: 0 0 6px; line-height: 1; }
+.modal-period { font-size: 12px; color: color-mix(in oklab, var(--c-hueso) 45%, transparent); }
+.modal-context { color: color-mix(in oklab, var(--c-hueso) 78%, transparent); font-size: 15px; line-height: 1.65; margin: 0 0 12px; border-left: 2px solid var(--c-ocre); padding-left: 16px; }
+.modal-summary { color: color-mix(in oklab, var(--c-hueso) 60%, transparent); font-size: 14px; line-height: 1.6; margin: 0 0 28px; font-style: italic; }
+.modal-section-title { font-size: 11px; letter-spacing: 2px; color: var(--c-ocre); text-transform: uppercase; margin-bottom: 14px; }
+.modal-highlights { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 14px; }
+.modal-highlights li { font-size: 14px; line-height: 1.6; color: color-mix(in oklab, var(--c-hueso) 85%, transparent); padding-left: 18px; position: relative; display: flex; flex-direction: column; gap: 2px; }
+.modal-highlights li::before { content: '·'; position: absolute; left: 4px; color: var(--c-ocre); font-size: 18px; line-height: 1.2; }
+.modal-highlights li strong { color: var(--c-hueso); font-size: 13px; }
+.modal-decisions { list-style: none; padding: 0; margin: 0 0 32px; display: flex; flex-direction: column; gap: 18px; }
+.modal-decisions li { padding-left: 18px; position: relative; display: flex; flex-direction: column; gap: 4px; }
+.modal-decisions li::before { content: '→'; position: absolute; left: 0; color: var(--c-ocre); font-size: 12px; line-height: 1.8; }
+.modal-decisions li strong { color: var(--c-hueso); font-size: 14px; }
+.decision-detail { font-size: 13px; line-height: 1.6; color: color-mix(in oklab, var(--c-hueso) 70%, transparent); }
+.decision-result { font-size: 13px; line-height: 1.5; color: var(--c-ocre); font-style: italic; }
+.modal-cta { display: inline-flex; }
+@keyframes modal-fade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes modal-up { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: translateY(0) } }
+
 /* ═══ Tweaks panel ═══ */
 .tweaks-panel {
   position: fixed; bottom: 20px; right: 20px; z-index: 100;

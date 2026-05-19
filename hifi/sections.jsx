@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { COPY } from './copy.jsx';
 import { TEXT } from './projects/projects.jsx';
@@ -185,15 +185,22 @@ function getProjectDetail(lang, slug) {
 }
 
 function ProjectModal({ detail, cardName, lang, onClose }) {
+  const [closing, setClosing] = useState(false);
+
+  const close = useCallback(() => {
+    setClosing(true);
+    setTimeout(onClose, 200);
+  }, [onClose]);
+
   useEffect(() => {
-    const onKey = (e) => e.key === 'Escape' && onClose();
+    const onKey = (e) => e.key === 'Escape' && close();
     document.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', onKey);
       document.body.style.overflow = '';
     };
-  }, [onClose]);
+  }, [close]);
 
   const es = lang === 'es';
   const desc      = es ? detail.descripcion                    : detail.description;
@@ -204,9 +211,9 @@ function ProjectModal({ detail, cardName, lang, onClose }) {
   const decisiones = es ? detail.decisionesClaveYResultados    : detail.keyDecisionsAndResults;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-panel" onClick={e => e.stopPropagation()}>
-        <button className="modal-close mono" onClick={onClose}>✕</button>
+    <div className={`modal-overlay${closing ? ' modal-closing' : ''}`} onClick={close}>
+      <div className={`modal-panel${closing ? ' modal-closing' : ''}`} onClick={e => e.stopPropagation()}>
+        <button className="modal-close mono" onClick={close}>✕</button>
         <div className="modal-header">
           <span className="modal-role mono">{rol}</span>
           <h2 className="modal-name">{cardName}</h2>
